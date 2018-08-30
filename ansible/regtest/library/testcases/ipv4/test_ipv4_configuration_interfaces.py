@@ -122,12 +122,12 @@ def verify_ipv4_configuration_interfaces(module):
 
     eth_list = [x for x in range(1, 32) if x % 2 != 0]
     for eth in eth_list:
-        eth_out = execute_commands(module, 'ip addr show eth-{}-1'.format(eth))
+        eth_out = execute_commands(module, 'ip addr show xeth{}'.format(eth))
         if ('192.168.{}.{}'.format(eth, switch_id) not in eth_out and
                 '192.168.{}.255'.format(eth) not in eth_out):
             RESULT_STATUS = False
             failure_summary += 'On switch {} '.format(switch_name)
-            failure_summary += 'eth-{}-1 interface '.format(eth)
+            failure_summary += 'xeth{} interface '.format(eth)
             failure_summary += 'is not configurable\n'
 
     # Get the GOES status info

@@ -124,7 +124,7 @@ def verify_bird_peering_consistency(module):
     failure_summary = ''
     switch_name = module.params['switch_name']
     package_name = module.params['package_name']
-    values_to_check = ['10.0.1.0', 'eth-1-1']
+    values_to_check = ['10.0.1.0', 'xeth1']
 
     # Get the current/running configurations
     execute_commands(module, 'cat /etc/bird/bird.conf')
@@ -149,7 +149,7 @@ def verify_bird_peering_consistency(module):
                 RESULT_STATUS = False
                 failure_summary += 'On switch {} '.format(switch_name)
                 failure_summary += 'bgp peering consistency for '
-                failure_summary += 'eth-1-1 interface is missing\n'
+                failure_summary += 'xeth1 interface is missing\n'
     else:
         RESULT_STATUS = False
         failure_summary += 'On switch {} '.format(switch_name)

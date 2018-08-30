@@ -167,7 +167,7 @@ def verify_bird_ospf_timers(module):
     execute_commands(module, 'service {} status'.format(package_name))
 
     for eth in eth_list:
-        execute_commands(module, 'ifconfig eth-{}-1 up'.format(eth))
+        execute_commands(module, 'ifconfig xeth{} up'.format(eth))
 
     # Get ospf interface details
     interface_cmd = 'birdc show ospf interface'
@@ -192,8 +192,8 @@ def verify_bird_ospf_timers(module):
 
     if switch_name == interval_switch:
         for eth in eth_list:
-            if 'eth-{}-1'.format(eth) in config_file:
-                eth_interface = 'eth-{}-1'.format(eth)
+            if 'xeth{}'.format(eth) in config_file:
+                eth_interface = 'xeth{}'.format(eth)
 
         if eth_interface:
             # Bring down the interface

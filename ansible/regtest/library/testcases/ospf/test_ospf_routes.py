@@ -138,7 +138,7 @@ def verify_ospf_routes(module):
             octets = address.split('.')
             octets[3] = switch_id
             ip = '.'.join(octets)
-            eth = 'eth-{}-1'.format(octets[2])
+            eth = 'xeth{}'.format(octets[2])
             cmd = 'ifconfig {} {} netmask 255.255.255.0'.format(eth, ip)
 
             # Run ifconfig command

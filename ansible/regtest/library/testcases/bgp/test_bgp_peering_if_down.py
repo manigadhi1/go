@@ -257,7 +257,7 @@ def verify_bgp_peering_interface_down(module):
     if is_leaf:
         for eth in eth_list:
             eth = eth.strip()
-            cmd = 'ifconfig eth-{}-1 down'.format(eth)
+            cmd = 'ifconfig xeth{} down'.format(eth)
             execute_commands(module, cmd)
 
     # Wait for 5 seconds
@@ -274,7 +274,7 @@ def verify_bgp_peering_interface_down(module):
     if is_leaf:
         for eth in eth_list:
             eth = eth.strip()
-            cmd = 'ifconfig eth-{}-1 up'.format(eth)
+            cmd = 'ifconfig xeth{} up'.format(eth)
             execute_commands(module, cmd)
 
     # Wait for 5 seconds

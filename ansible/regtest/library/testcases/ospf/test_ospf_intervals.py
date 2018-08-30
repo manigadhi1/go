@@ -158,7 +158,7 @@ def verify_ospf_intervals(module):
     execute_commands(module, 'service {} status'.format(package_name))
 
     for eth in eth_list:
-        execute_commands(module, 'ifconfig eth-{}-1 up'.format(eth))
+        execute_commands(module, 'ifconfig xeth{} up'.format(eth))
 
     # Get and verify ospf neighbor relationships
     cmd = "vtysh -c 'sh ip ospf neighbor'"
@@ -166,10 +166,10 @@ def verify_ospf_intervals(module):
 
     if all_neighbors:
         for eth in eth_list:
-            if 'eth-{}-1'.format(eth) not in all_neighbors:
+            if 'xeth{}'.format(eth) not in all_neighbors:
                 failure_summary += 'On switch {} '.format(switch_name)
                 failure_summary += 'ospf neighbor is not showing up '
-                failure_summary += 'for eth-{}-1 interface\n'.format(eth)
+                failure_summary += 'for xeth{} interface\n'.format(eth)
     else:
         RESULT_STATUS = False
         failure_summary += 'On switch {} '.format(switch_name)
@@ -179,7 +179,7 @@ def verify_ospf_intervals(module):
     if switch_name == interval_switch:
         # Verify hello and dead time intervals
         for eth in eth_list:
-            cmd = "vtysh -c 'sh ip ospf interface eth-{}-1'".format(eth)
+            cmd = "vtysh -c 'sh ip ospf interface xeth{}'".format(eth)
             out = execute_commands(module, cmd)
 
             if out:
@@ -187,13 +187,13 @@ def verify_ospf_intervals(module):
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
                     failure_summary += 'hello timer interval is not configured '
-                    failure_summary += 'for eth-{}-1 interface\n'.format(eth)
+                    failure_summary += 'for xeth{} interface\n'.format(eth)
 
                 if 'Dead {}'.format(dead_timer) not in out:
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
                     failure_summary += 'dead timer interval is not configured '
-                    failure_summary += 'for eth-{}-1 interface\n'.format(eth)
+                    failure_summary += 'for xeth{} interface\n'.format(eth)
             else:
                 RESULT_STATUS = False
                 failure_summary += 'On switch {} '.format(switch_name)
@@ -201,7 +201,7 @@ def verify_ospf_intervals(module):
                 failure_summary += 'since output of command {} is None\n'.format(cmd)
 
             # Bring down the interface
-            down_cmd = 'ifconfig eth-{}-1 down'.format(eth)
+            down_cmd = 'ifconfig xeth{} down'.format(eth)
             execute_commands(module, down_cmd)
 
             # Wait for dead time interval
@@ -212,11 +212,11 @@ def verify_ospf_intervals(module):
             all_neighbors = execute_commands(module, cmd)
 
             if all_neighbors:
-                if 'eth-{}-1'.format(eth) in all_neighbors:
+                if 'xeth{}'.format(eth) in all_neighbors:
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
                     failure_summary += 'ospf neighbor is showing up '
-                    failure_summary += 'for eth-{}-1 interface '.format(eth)
+                    failure_summary += 'for xeth{} interface '.format(eth)
                     failure_summary += 'even after bringing down this interface\n'
             else:
                 RESULT_STATUS = False
@@ -225,7 +225,7 @@ def verify_ospf_intervals(module):
                 failure_summary += 'output of command {} is None\n'.format(cmd)
 
             # Bring up the interface which we had brought down
-            up_cmd = 'ifconfig eth-{}-1 up'.format(eth)
+            up_cmd = 'ifconfig xeth{} up'.format(eth)
             execute_commands(module, up_cmd)
 
             # Wait for hello time interval
@@ -236,11 +236,11 @@ def verify_ospf_intervals(module):
             all_neighbors = execute_commands(module, cmd)
 
             if all_neighbors:
-                if 'eth-{}-1'.format(eth) not in all_neighbors:
+                if 'xeth{}'.format(eth) not in all_neighbors:
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
                     failure_summary += 'ospf neighbor is not showing up '
-                    failure_summary += 'for eth-{}-1 interface '.format(eth)
+                    failure_summary += 'for xeth{} interface '.format(eth)
                     failure_summary += 'even after bringing up this interface\n'
             else:
                 RESULT_STATUS = False

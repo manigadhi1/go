@@ -36,19 +36,19 @@
       add_dummy_interface:
         switch_name: "{{ inventory_hostname }}"
 
-    - name: Configure cost on eth-7-1
+    - name: Configure cost on xeth7
       blockinfile:
         path: "{{ quagga_ospf_conf_file }}"
-        insertafter: "interface eth-7-1"
-        marker: "! eth-7-1 {mark}"
+        insertafter: "interface xeth7"
+        marker: "! xeth7 {mark}"
         block: |
           ip ospf cost 10
 
-    - name: Configure cost on eth-17-1
+    - name: Configure cost on xeth17
       blockinfile:
         path: "{{ quagga_ospf_conf_file }}"
-        insertafter: "interface eth-17-1"
-        marker: "! eth-17-1 {mark}"
+        insertafter: "interface xeth17"
+        marker: "! xeth17 {mark}"
         block: |
           ip ospf cost 10
 

@@ -145,7 +145,7 @@ def verify_vlan_configurations(module):
     # Bring down interfaces that are connected to packet generator
     if is_leaf:
         for eth in [x for x in range(1, 33) if x % 2 == 0]:
-            execute_commands(module, 'ifconfig eth-{}-1 down'.format(eth))
+            execute_commands(module, 'ifconfig xeth{} down'.format(eth))
 
     # Get the list of eth interfaces
     for line in config_file:
@@ -157,23 +157,23 @@ def verify_vlan_configurations(module):
 
     # Configure vlan interfaces and assign ip to it
     for eth in eth_list:
-        cmd = 'ip link add link eth-{}-1 name eth-{}-1.1 type vlan id {}'.format(
+        cmd = 'ip link add link xeth{} name xeth{}.1 type vlan id {}'.format(
             eth, eth, eth
         )
         execute_commands(module, cmd)
-        execute_commands(module, 'ifconfig eth-{}-1.1 192.168.{}.{}/24'.format(
+        execute_commands(module, 'ifconfig xeth{}.1 192.168.{}.{}/24'.format(
             eth, eth, third_octet
         ))
 
     # Verify vlan interfaces got created with ip assigned to them
     for eth in eth_list:
-        ip_out = execute_commands(module, 'ifconfig eth-{}-1.1'.format(eth))
+        ip_out = execute_commands(module, 'ifconfig xeth{}.1'.format(eth))
         if ip_out:
             if '192.168.{}.{}'.format(eth, third_octet) not in ip_out:
                 RESULT_STATUS = False
                 failure_summary += 'On switch {} '.format(switch_name)
                 failure_summary += 'failed to configure vlan on interface '
-                failure_summary += 'eth-{}-1.1\n'.format(eth)
+                failure_summary += 'xeth{}.1\n'.format(eth)
 
     # Restart quagga
     execute_commands(module, 'service quagga restart')
@@ -202,7 +202,7 @@ def verify_vlan_configurations(module):
                 )
                 execute_commands(module, ping_cmd)
             else:
-                cmd = 'tcpdump -c 15 -net -i eth-{}-1'.format(eth)
+                cmd = 'tcpdump -c 15 -net -i xeth{}'.format(eth)
                 tcpdump_out = execute_commands(module, cmd)
 
                 if tcpdump_out:
@@ -211,14 +211,14 @@ def verify_vlan_configurations(module):
                         RESULT_STATUS = False
                         failure_summary += 'On switch {} '.format(switch_name)
                         failure_summary += 'there are no vlan tagged packets '
-                        failure_summary += 'captured in tcpdump for eth-{}-1\n'.format(eth)
+                        failure_summary += 'captured in tcpdump for xeth{}\n'.format(eth)
                 else:
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
                     failure_summary += 'failed to capture tcpdump output\n'
     else:
         for eth in eth_list:
-            cmd = 'tcpdump -c 15 -net -i eth-{}-1'.format(eth)
+            cmd = 'tcpdump -c 15 -net -i xeth{}'.format(eth)
             tcpdump_out = execute_commands(module, cmd)
 
             if tcpdump_out:
@@ -227,7 +227,7 @@ def verify_vlan_configurations(module):
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
                     failure_summary += 'there are no vlan tagged packets '
-                    failure_summary += 'captured in tcpdump for eth-{}-1\n'.format(eth)
+                    failure_summary += 'captured in tcpdump for xeth{}\n'.format(eth)
             else:
                 RESULT_STATUS = False
                 failure_summary += 'On switch {} '.format(switch_name)

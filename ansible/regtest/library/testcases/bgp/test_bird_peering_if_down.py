@@ -204,12 +204,12 @@ def change_interface_state(module, eth_list, leaf_list, state):
     :param leaf_list: List of leaf switches.
     :param state: State of the interface, either up or down.
     """
-    execute_commands(module, 'ifconfig eth-{}-1 {}'.format(eth_list[1], state))
+    execute_commands(module, 'ifconfig xeth{} {}'.format(eth_list[1], state))
     if leaf_list.index(module.params['switch_name']) == 0:
-        execute_commands(module, 'ifconfig eth-{}-1 {}'.format(
+        execute_commands(module, 'ifconfig xeth{} {}'.format(
             eth_list[0], state))
     else:
-        execute_commands(module, 'ifconfig eth-{}-1 {}'.format(
+        execute_commands(module, 'ifconfig xeth{} {}'.format(
             eth_list[2], state))
 
 

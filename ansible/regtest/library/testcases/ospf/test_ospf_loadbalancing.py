@@ -175,7 +175,7 @@ def verify_ospf_load_balancing(module):
             else:
                 octets[3] = switch_id
                 ip = '.'.join(octets)
-                eth = 'eth-{}-1'.format(octets[2])
+                eth = 'xeth{}'.format(octets[2])
                 routes_to_check.append(eth)
                 cmd = 'ifconfig {} {} {}'.format(eth, ip, netmask)
 

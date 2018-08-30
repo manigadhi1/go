@@ -17,23 +17,23 @@ iface eth0 inet static
   gateway 172.17.2.1
   dns-nameservers 8.8.8.8 8.8.4.4
 
-allow-vnet eth-2-1
-iface eth-2-1 inet static
+allow-vnet xeth2
+iface xeth2 inet static
   address 10.0.2.29
   netmask 255.255.255.0
 
-allow-vnet eth-4-1
-iface eth-4-1 inet static
+allow-vnet xeth4
+iface xeth4 inet static
   address 10.0.4.29
   netmask 255.255.255.0
 
-allow-vnet eth-6-1
-iface eth-6-1 inet static
+allow-vnet xeth6
+iface xeth6 inet static
   address 10.0.6.29
   netmask 255.255.255.0
 
-allow-vnet eth-8-1
-iface eth-8-1 inet static
+allow-vnet xeth8
+iface xeth8 inet static
   address 10.0.8.29
   netmask 255.255.255.0
 
@@ -97,8 +97,8 @@ iface eth-32-1 inet static
   address 10.0.32.29
   netmask 255.255.255.0
 
-allow-vnet eth-1-1
-iface eth-1-1 inet static
+allow-vnet xeth1
+iface xeth1 inet static
 	address 10.0.1.29
 	netmask 255.255.255.0
 	up route add -net 1.1.1.1 netmask 255.255.255.255 gw 10.0.1.31
@@ -1103,11 +1103,11 @@ iface eth-1-1 inet static
 	up route add -net 1.1.4.235 netmask 255.255.255.255 gw 10.0.1.31
 
 
-allow-vnet eth-3-1
-iface eth-3-1 inet static
+allow-vnet xeth3
+iface xeth3 inet static
 	address 10.0.3.29
 	netmask 255.255.255.0
-	root@invader29:/home/sandeep# cat eth-3-1.txt
+	root@invader29:/home/sandeep# cat xeth3.txt
 	up route add -net 1.1.5.1 netmask 255.255.255.255 gw 10.0.3.31
 	up route add -net 1.1.5.2 netmask 255.255.255.255 gw 10.0.3.31
 	up route add -net 1.1.5.3 netmask 255.255.255.255 gw 10.0.3.31
@@ -2110,8 +2110,8 @@ iface eth-3-1 inet static
 	up route add -net 1.1.8.235 netmask 255.255.255.255 gw 10.0.3.31
 
 
-allow-vnet eth-5-1
-iface eth-5-1 inet static
+allow-vnet xeth5
+iface xeth5 inet static
 	address 10.0.5.29
 	netmask 255.255.255.0
 	up route add -net 1.1.9.1 netmask 255.255.255.255 gw 10.0.5.31
@@ -3116,8 +3116,8 @@ iface eth-5-1 inet static
 	up route add -net 1.1.12.235 netmask 255.255.255.255 gw 10.0.5.31
 
 
-allow-vnet eth-7-1
-iface eth-7-1 inet static
+allow-vnet xeth7
+iface xeth7 inet static
 	address 10.0.7.29
 	netmask 255.255.255.0
 	up route add -net 1.1.13.1 netmask 255.255.255.255 gw 10.0.7.31

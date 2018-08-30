@@ -13,7 +13,7 @@
 
 
 # Run all quagga bgp test cases
-- include: playbooks/bgp/quagga_bgp_peering_ebgp.yml
+#- include: playbooks/bgp/quagga_bgp_peering_ebgp.yml
 
 - include: playbooks/bgp/quagga_bgp_peering_ebgp_loopback.yml
 
@@ -39,7 +39,7 @@
 
 - include: playbooks/bgp/quagga_bgp_peering_route_reflector.yml
 
-#- include: playbooks/bgp/quagga_bgp_peering_redundancy.yml
+- include: playbooks/bgp/quagga_bgp_peering_redundancy.yml
 
 - include: playbooks/bgp/quagga_bgp_peering_consistency.yml
 
@@ -47,7 +47,7 @@
 
 - include: playbooks/bgp/quagga_bgp_peering_loop_prevention.yml
 
-#- include: playbooks/bgp/quagga_bgp_state_propagation.yml
+- include: playbooks/bgp/quagga_bgp_state_propagation.yml
 
 - include: playbooks/bgp/quagga_bgp_ecmp_loadbalancing_paths.yml
 

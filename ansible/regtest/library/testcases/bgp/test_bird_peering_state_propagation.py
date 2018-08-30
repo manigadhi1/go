@@ -211,7 +211,7 @@ def verify_bird_peering_state_propagation(module):
         # Bring down interfaces on propagate switch
         if switch_name == propagate_switch:
             for eth in eth_list:
-                execute_commands(module, 'ifconfig eth-{}-1 down'.format(eth))
+                execute_commands(module, 'ifconfig xeth{} down'.format(eth))
 
         # Wait for 200 sec in order for route to become unreachable
         time.sleep(200)
@@ -225,7 +225,7 @@ def verify_bird_peering_state_propagation(module):
         # Bring up interfaces on propagate switch
         if switch_name == propagate_switch:
             for eth in eth_list:
-                execute_commands(module, 'ifconfig eth-{}-1 up'.format(eth))
+                execute_commands(module, 'ifconfig xeth{} up'.format(eth))
 
         # Wait for 12 sec for BGP to send/receive state update message
         time.sleep(12)

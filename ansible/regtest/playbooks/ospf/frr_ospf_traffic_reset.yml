@@ -2,6 +2,7 @@
 
 - hosts: leaf:spine
   become: true
+  ignore_errors: yes
   tasks:
     - name: Restore backup of /etc/frr/ospfd.conf
       copy:

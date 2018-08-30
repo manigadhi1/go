@@ -141,7 +141,7 @@ def test_traffic(module, eth, third_octet, port):
         RESULT_STATUS = False
         failure_summary += 'On switch {} '.format(switch_name)
         failure_summary += 'iperf traffic cannot be verified for '
-        failure_summary += 'eth-{}-1 using command {}\n'.format(eth, cmd)
+        failure_summary += 'xeth{} using command {}\n'.format(eth, cmd)
 
     return failure_summary
 
@@ -178,7 +178,7 @@ def verify_redis_stats(module):
         redis_rx_count, redis_tx_count = 0, 0
         front_rx_count, front_tx_count = 0, 0
 
-        cmd = 'goes vnet show ha eth-{}-1'.format(eth)
+        cmd = 'goes vnet show ha xeth{}'.format(eth)
         ha_out = execute_commands(module, cmd)
 
         if ha_out:
@@ -195,7 +195,7 @@ def verify_redis_stats(module):
                     redis_tx_count = line[1].strip()
                     redis_tx_count = int(redis_tx_count)
 
-            config_out = execute_commands(module, 'ifconfig eth-{}-1'.format(
+            config_out = execute_commands(module, 'ifconfig xeth{}'.format(
                 eth))
 
             if config_out:

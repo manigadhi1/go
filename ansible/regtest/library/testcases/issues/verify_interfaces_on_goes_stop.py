@@ -128,7 +128,7 @@ def main():
     global HASH_DICT, RESULT_STATUS
     failure_summary = ''
     switch_name = module.params['switch_name']
-    eth_list = ['eth-{}-1'.format(i) for i in range(1, 18)]
+    eth_list = ['xeth{}'.format(i) for i in range(1, 18)]
 
     # Stop goes
     execute_commands(module, 'goes stop')

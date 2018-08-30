@@ -139,7 +139,7 @@ def change_speed_and_verify_links(module, speed):
 
     # Bring down interface and update the speed to auto
     for eth in eth_list:
-        eth = 'eth-{}-1'.format(eth)
+        eth = 'xeth{}'.format(eth)
         execute_commands(module, 'ifdown {}'.format(eth))
         execute_commands(module, 'goes hset {} vnet.{}.speed {}'.format(
             platina_redis_channel, eth, speed))
@@ -150,7 +150,7 @@ def change_speed_and_verify_links(module, speed):
 
     # Check the port link status, it should be true
     for eth in eth_list:
-        eth = 'eth-{}-1'.format(eth)
+        eth = 'xeth{}'.format(eth)
         cmd = 'goes hget {} vnet.{}.link'.format(platina_redis_channel, eth)
         link_out = execute_commands(module, cmd)
         if 'true' not in link_out:

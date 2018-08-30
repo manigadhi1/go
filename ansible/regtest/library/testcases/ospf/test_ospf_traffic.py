@@ -161,7 +161,7 @@ def verify_ospf_traffic(module):
             else:
                 octets[3] = switch_id
                 ip = '.'.join(octets)
-                eth = 'eth-{}-1'.format(octets[2])
+                eth = 'xeth{}'.format(octets[2])
                 cmd = 'ifconfig {} {} {}'.format(eth, ip, netmask)
 
             # Run ifconfig command

@@ -249,7 +249,7 @@ def verify_gobgp_peering(module):
         if switch_name in leaf_list:
             # Bring down the interfaces
             for eth in eth_list:
-                down_cmd = 'ifconfig eth-{}-1 down'.format(eth)
+                down_cmd = 'ifconfig xeth{} down'.format(eth)
                 execute_commands(module, down_cmd)
 
         # Wait for 5 secs
@@ -261,7 +261,7 @@ def verify_gobgp_peering(module):
         if switch_name in leaf_list:
             # Bring up the interfaces
             for eth in eth_list:
-                down_cmd = 'ifconfig eth-{}-1 up'.format(eth)
+                down_cmd = 'ifconfig xeth{} up'.format(eth)
                 execute_commands(module, down_cmd)
 
         # Wait for 5 secs

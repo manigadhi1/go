@@ -36,19 +36,19 @@
       add_dummy_interface:
         switch_name: "{{ inventory_hostname }}"
 
-    - name: Configure hello and dead time interval for eth-7-1
+    - name: Configure hello and dead time interval for xeth7
       blockinfile:
         path: "{{ quagga_ospf_conf_file }}"
-        insertafter: "interface eth-7-1"
+        insertafter: "interface xeth7"
         marker: "! {mark} foo"
         block: |
           ip ospf dead-interval 10
           ip ospf hello-interval 5
 
-    - name: Configure hello and dead time interval for eth-17-1
+    - name: Configure hello and dead time interval for xeth17
       blockinfile:
         path: "{{ quagga_ospf_conf_file }}"
-        insertafter: "interface eth-17-1"
+        insertafter: "interface xeth17"
         marker: "! {mark} bar"
         block: |
           ip ospf dead-interval 10

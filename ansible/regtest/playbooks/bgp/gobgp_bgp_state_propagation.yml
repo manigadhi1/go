@@ -90,11 +90,11 @@
 - hosts: leaf[1]
   become: true
   tasks:
-    - name: Shutdown interface eth-19-1
-      command: "ifconfig eth-19-1 down"
+    - name: Shutdown interface xeth19
+      command: "ifconfig xeth19 down"
 
-    - name: Shutdown interface eth-3-1
-      command: "ifconfig eth-3-1 down"
+    - name: Shutdown interface xeth3
+      command: "ifconfig xeth3 down"
 
     - name: Wait 200 seconds for route to become unreachable
       pause:
@@ -134,11 +134,11 @@
 - hosts: leaf[1]
   become: true
   tasks:
-    - name: Bring up interface eth-19-1
-      command: "ifconfig eth-19-1 up"
+    - name: Bring up interface xeth19
+      command: "ifconfig xeth19 up"
 
-    - name: Bring up interface eth-3-1
-      command: "ifconfig eth-3-1 up"
+    - name: Bring up interface xeth3
+      command: "ifconfig xeth3 up"
 
     - name: Wait 40 seconds for route to become reachable
       pause:

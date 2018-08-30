@@ -144,7 +144,7 @@ def verify_ospf_ecmp_basic(module):
 
     # Verify configured cost on interfaces
     for eth in module.params['eth_list'].split(','):
-        cmd = "vtysh -c 'sh ip ospf interface eth-{}-1'".format(eth)
+        cmd = "vtysh -c 'sh ip ospf interface xeth{}'".format(eth)
         ospf_out = execute_commands(module, cmd)
 
         if ospf_out:
@@ -152,7 +152,7 @@ def verify_ospf_ecmp_basic(module):
                 RESULT_STATUS = False
                 failure_summary += 'On switch {} '.format(switch_name)
                 failure_summary += 'cost {} is not showing up for '.format(cost)
-                failure_summary += 'eth-{}-1 interface '.format(eth)
+                failure_summary += 'xeth{} interface '.format(eth)
                 failure_summary += 'in output of command {}\n'.format(cmd)
         else:
             RESULT_STATUS = False

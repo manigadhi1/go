@@ -167,38 +167,38 @@ def verify_vlan_configurations(module):
     # Bring down interfaces that are connected to packet generator
     if is_leaf:
         for eth in [x for x in range(1, 33) if x % 2 == 0]:
-            execute_commands(module, 'ifconfig eth-{}-1 down'.format(eth))
+            execute_commands(module, 'ifconfig xeth{} down'.format(eth))
 
     # Configure vlan interfaces and assign ip to it
     if not multiple_vlan:
         for eth in eth_list:
-            cmd = 'ip link add link eth-{}-1 name eth-{}-1.1 type vlan id {}'.format(
+            cmd = 'ip link add link xeth{} name xeth{}.1 type vlan id {}'.format(
                 eth, eth, eth
             )
             execute_commands(module, cmd)
-            execute_commands(module, 'ifconfig eth-{}-1.1 192.168.{}.{}/24'.format(
+            execute_commands(module, 'ifconfig xeth{}.1 192.168.{}.{}/24'.format(
                 eth, eth, third_octet
             ))
 
         # Verify vlan interfaces got created with ip assigned to them
         for eth in eth_list:
-            ip_out = execute_commands(module, 'ifconfig eth-{}-1.1'.format(eth))
+            ip_out = execute_commands(module, 'ifconfig xeth{}.1'.format(eth))
             if ip_out:
                 if '192.168.{}.{}'.format(eth, third_octet) not in ip_out:
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
                     failure_summary += 'failed to configure vlan on interface '
-                    failure_summary += 'eth-{}-1.1\n'.format(eth)
+                    failure_summary += 'xeth{}.1\n'.format(eth)
     else:
         for eth in eth_list:
             vlan_id = int(eth)
             for subport in range(1, 5):
                 vlan_id += 1
-                cmd = 'ip link add link eth-{}-1 name eth-{}-1.{} type vlan id {}'.format(
+                cmd = 'ip link add link xeth{} name xeth{}.{} type vlan id {}'.format(
                     eth, eth, subport, vlan_id
                 )
                 execute_commands(module, cmd)
-                execute_commands(module, 'ifconfig eth-{}-1.{} 192.168.{}.{}/24'.format(
+                execute_commands(module, 'ifconfig xeth{}.{} 192.168.{}.{}/24'.format(
                     eth, subport, vlan_id, third_octet
                 ))
 
@@ -207,7 +207,7 @@ def verify_vlan_configurations(module):
             vlan_id = int(eth)
             for subport in range(1, 5):
                 vlan_id += 1
-                ip_out = execute_commands(module, 'ifconfig eth-{}-1.{}'.format(
+                ip_out = execute_commands(module, 'ifconfig xeth{}.{}'.format(
                     eth, subport
                 ))
                 if ip_out:
@@ -215,7 +215,7 @@ def verify_vlan_configurations(module):
                         RESULT_STATUS = False
                         failure_summary += 'On switch {} '.format(switch_name)
                         failure_summary += 'failed to configure vlan on interface '
-                        failure_summary += 'eth-{}-1.{}\n'.format(eth, subport)
+                        failure_summary += 'xeth{}.{}\n'.format(eth, subport)
 
     if not lldp:
         # Initiate arping/ping and verify tcpdump output
@@ -224,7 +224,7 @@ def verify_vlan_configurations(module):
                 index = eth_list.index(eth)
                 last_octet = spine_list[index][-2::]
                 if arping:
-                    arp_cmd = 'arping -C 15 -I eth-{}-1.1 192.168.{}.{}'.format(
+                    arp_cmd = 'arping -C 15 -I xeth{}.1 192.168.{}.{}'.format(
                         eth, eth, last_octet
                     )
                     execute_commands(module, arp_cmd)
@@ -245,7 +245,7 @@ def verify_vlan_configurations(module):
             state = 'arp' if arping else 'icmp'
 
             if not multiple_vlan:
-                cmd = 'tcpdump -c 15 -net -i eth-{}-1 {}'.format(eth, state)
+                cmd = 'tcpdump -c 15 -net -i xeth{} {}'.format(eth, state)
                 tcpdump_out = execute_commands(module, cmd)
 
                 if tcpdump_out:
@@ -254,7 +254,7 @@ def verify_vlan_configurations(module):
                         RESULT_STATUS = False
                         failure_summary += 'On switch {} '.format(switch_name)
                         failure_summary += 'there are no vlan tagged packets '
-                        failure_summary += 'captured in tcpdump for eth-{}-1\n'.format(eth)
+                        failure_summary += 'captured in tcpdump for xeth{}\n'.format(eth)
                 else:
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
@@ -263,7 +263,7 @@ def verify_vlan_configurations(module):
                 vlan_id = int(eth)
                 for subport in range(1, 5):
                     vlan_id += 1
-                    cmd = 'tcpdump -c 15 -net -i eth-{}-1 {}'.format(eth, state)
+                    cmd = 'tcpdump -c 15 -net -i xeth{} {}'.format(eth, state)
                     tcpdump_out = execute_commands(module, cmd)
 
                     if tcpdump_out:
@@ -272,14 +272,14 @@ def verify_vlan_configurations(module):
                             RESULT_STATUS = False
                             failure_summary += 'On switch {} '.format(switch_name)
                             failure_summary += 'there are no vlan tagged packets '
-                            failure_summary += 'captured in tcpdump for eth-{}-1\n'.format(eth)
+                            failure_summary += 'captured in tcpdump for xeth{}\n'.format(eth)
                     else:
                         RESULT_STATUS = False
                         failure_summary += 'On switch {} '.format(switch_name)
                         failure_summary += 'failed to capture tcpdump output\n'
     else:
         for eth in eth_list:
-            cmd = 'tcpdump -c 7 -G 10 -net -i eth-{}-1 not proto ospf and not arp -vvv'.format(eth)
+            cmd = 'tcpdump -c 7 -G 10 -net -i xeth{} not proto ospf and not arp -vvv'.format(eth)
             lldp_out = execute_commands(module, cmd)
 
             if lldp_out:
@@ -288,7 +288,7 @@ def verify_vlan_configurations(module):
                     RESULT_STATUS = False
                     failure_summary += 'On switch {} '.format(switch_name)
                     failure_summary += 'there are no vlan tagged packets '
-                    failure_summary += 'captured in tcpdump for eth-{}-1\n'.format(eth)
+                    failure_summary += 'captured in tcpdump for xeth{}\n'.format(eth)
             else:
                 RESULT_STATUS = False
                 failure_summary += 'On switch {} '.format(switch_name)

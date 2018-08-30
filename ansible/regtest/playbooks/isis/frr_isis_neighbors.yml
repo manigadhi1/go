@@ -57,11 +57,11 @@
 - hosts: leaf[0]:spine[1]
   become: true
   tasks:
-    - name: Configure isis for eth-21-1
+    - name: Configure isis for xeth21
       blockinfile:
         path: "{{ frr_isis_conf_file }}"
-        insertafter: "interface eth-21-1"
-        marker: "! eth-21-1 {mark}"
+        insertafter: "interface xeth21"
+        marker: "! xeth21 {mark}"
         block: |
           ip router isis platina
 
@@ -69,11 +69,11 @@
 - hosts: leaf[0]:spine[0]
   become: true
   tasks:
-    - name: Configure isis for eth-11-1
+    - name: Configure isis for xeth11
       blockinfile:
         path: "{{ frr_isis_conf_file }}"
-        insertafter: "interface eth-11-1"
-        marker: "! eth-11-1 {mark}"
+        insertafter: "interface xeth11"
+        marker: "! xeth11 {mark}"
         block: |
           ip router isis platina
 
@@ -81,11 +81,11 @@
 - hosts: leaf[1]:spine[1]
   become: true
   tasks:
-    - name: Configure isis for eth-5-1
+    - name: Configure isis for xeth5
       blockinfile:
         path: "{{ frr_isis_conf_file }}"
-        insertafter: "interface eth-5-1"
-        marker: "! eth-5-1 {mark}"
+        insertafter: "interface xeth5"
+        marker: "! xeth5 {mark}"
         block: |
           ip router isis platina
 
@@ -93,11 +93,11 @@
 - hosts: leaf[1]:spine[0]
   become: true
   tasks:
-    - name: Configure isis for eth-27-1
+    - name: Configure isis for xeth27
       blockinfile:
         path: "{{ frr_isis_conf_file }}"
-        insertafter: "interface eth-27-1"
-        marker: "! eth-27-1 {mark}"
+        insertafter: "interface xeth27"
+        marker: "! xeth27 {mark}"
         block: |
           ip router isis platina
 
