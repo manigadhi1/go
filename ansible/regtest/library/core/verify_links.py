@@ -111,14 +111,14 @@ def main():
     result_status = True
 
     for eth in eth_list:
-        cmd = 'goes hget {} vnet.eth-{}-1.link'.format(platina_redis_channel, eth)
+        cmd = 'goes hget {} vnet.xeth{}.link'.format(platina_redis_channel, eth)
         link_status = run_cli(module, cmd)
 
         if 'true' not in link_status:
             result_status = False
             msg += 'On switch {} '.format(switch_name)
             msg += 'port link is not up for '
-            msg += 'eth-{}-1 interface\n'.format(eth)
+            msg += 'xeth{} interface\n'.format(eth)
 
     if is_leaf and result_status:
         if leaf_list.index(switch_name) == 0:
@@ -127,7 +127,6 @@ def main():
         else:
             last_octet1 = '32'
             last_octet2 = '31'
-#            time.sleep(50)
 
         for eth in range(1, 16, 2):
             ip = '10.0.{}.{}'.format(eth, last_octet1)
