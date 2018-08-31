@@ -17,88 +17,88 @@ iface eth0 inet static
   gateway 172.17.2.1
   dns-nameservers 8.8.8.8 8.8.4.4
 
-allow-vnet eth-2-1
-iface eth-2-1 inet static
+allow-vnet xeth2
+iface xeth2 inet static
   address 10.0.2.29
   netmask 255.255.255.0
 
-allow-vnet eth-4-1
-iface eth-4-1 inet static
+allow-vnet xeth4
+iface xeth4 inet static
   address 10.0.4.29
   netmask 255.255.255.0
 
-allow-vnet eth-6-1
-iface eth-6-1 inet static
+allow-vnet xeth6
+iface xeth6 inet static
   address 10.0.6.29
   netmask 255.255.255.0
 
-allow-vnet eth-8-1
-iface eth-8-1 inet static
+allow-vnet xeth8
+iface xeth8 inet static
   address 10.0.8.29
   netmask 255.255.255.0
 
-allow-vnet eth-10-1
-iface eth-10-1 inet static
+allow-vnet xeth10
+iface xeth10 inet static
   address 10.0.10.29
   netmask 255.255.255.0
 
-allow-vnet eth-12-1
-iface eth-12-1 inet static
+allow-vnet xeth12
+iface xeth12 inet static
   address 10.0.12.29
   netmask 255.255.255.0
 
-allow-vnet eth-14-1
-iface eth-14-1 inet static
+allow-vnet xeth14
+iface xeth14 inet static
   address 10.0.14.29
   netmask 255.255.255.0
 
-allow-vnet eth-16-1
-iface eth-16-1 inet static
+allow-vnet xeth16
+iface xeth16 inet static
   address 10.0.16.29
   netmask 255.255.255.0
 
-allow-vnet eth-18-1
-iface eth-18-1 inet static
+allow-vnet xeth18
+iface xeth18 inet static
   address 10.0.18.29
   netmask 255.255.255.0
 
-allow-vnet eth-20-1
-iface eth-20-1 inet static
+allow-vnet xeth20
+iface xeth20 inet static
   address 10.0.20.29
   netmask 255.255.255.0
 
-allow-vnet eth-22-1
-iface eth-22-1 inet static
+allow-vnet xeth22
+iface xeth22 inet static
   address 10.0.22.29
   netmask 255.255.255.0
 
-allow-vnet eth-24-1
-iface eth-24-1 inet static
+allow-vnet xeth24
+iface xeth24 inet static
   address 10.0.24.29
   netmask 255.255.255.0
 
-allow-vnet eth-26-1
-iface eth-26-1 inet static
+allow-vnet xeth26
+iface xeth26 inet static
   address 10.0.26.29
   netmask 255.255.255.0
 
-allow-vnet eth-28-1
-iface eth-28-1 inet static
+allow-vnet xeth28
+iface xeth28 inet static
   address 10.0.28.29
   netmask 255.255.255.0
 
-allow-vnet eth-30-1
-iface eth-30-1 inet static
+allow-vnet xeth30
+iface xeth30 inet static
   address 10.0.30.29
   netmask 255.255.255.0
 
-allow-vnet eth-32-1
-iface eth-32-1 inet static
+allow-vnet xeth32
+iface xeth32 inet static
   address 10.0.32.29
   netmask 255.255.255.0
 
-allow-vnet eth-1-1
-iface eth-1-1 inet static
+allow-vnet xeth1
+iface xeth1 inet static
 	address 10.0.1.29
 	netmask 255.255.255.0
 	up route add -net 1.1.1.1 netmask 255.255.255.255 gw 10.0.1.31
@@ -1103,11 +1103,10 @@ iface eth-1-1 inet static
 	up route add -net 1.1.4.235 netmask 255.255.255.255 gw 10.0.1.31
 
 
-allow-vnet eth-3-1
-iface eth-3-1 inet static
+allow-vnet xeth3
+iface xeth3 inet static
 	address 10.0.3.29
 	netmask 255.255.255.0
-	root@invader29:/home/sandeep# cat eth-3-1.txt
 	up route add -net 1.1.5.1 netmask 255.255.255.255 gw 10.0.3.31
 	up route add -net 1.1.5.2 netmask 255.255.255.255 gw 10.0.3.31
 	up route add -net 1.1.5.3 netmask 255.255.255.255 gw 10.0.3.31
@@ -2110,8 +2109,8 @@ iface eth-3-1 inet static
 	up route add -net 1.1.8.235 netmask 255.255.255.255 gw 10.0.3.31
 
 
-allow-vnet eth-5-1
-iface eth-5-1 inet static
+allow-vnet xeth5
+iface xeth5 inet static
 	address 10.0.5.29
 	netmask 255.255.255.0
 	up route add -net 1.1.9.1 netmask 255.255.255.255 gw 10.0.5.31
@@ -3116,8 +3115,8 @@ iface eth-5-1 inet static
 	up route add -net 1.1.12.235 netmask 255.255.255.255 gw 10.0.5.31
 
 
-allow-vnet eth-7-1
-iface eth-7-1 inet static
+allow-vnet xeth7
+iface xeth7 inet static
 	address 10.0.7.29
 	netmask 255.255.255.0
 	up route add -net 1.1.13.1 netmask 255.255.255.255 gw 10.0.7.31
@@ -4121,8 +4120,8 @@ iface eth-7-1 inet static
 	up route add -net 1.1.16.234 netmask 255.255.255.255 gw 10.0.7.31
 	up route add -net 1.1.16.235 netmask 255.255.255.255 gw 10.0.7.31
 
-allow-vnet eth-9-1
-iface eth-9-1 inet static
+allow-vnet xeth9
+iface xeth9 inet static
 	address 10.0.9.29
 	netmask 255.255.255.0
 	up route add -net 1.1.17.1 netmask 255.255.255.255 gw 10.0.9.31
@@ -5127,8 +5126,8 @@ iface eth-9-1 inet static
 	up route add -net 1.1.20.235 netmask 255.255.255.255 gw 10.0.9.31
 
 
-allow-vnet eth-11-1
-iface eth-11-1 inet static
+allow-vnet xeth11
+iface xeth11 inet static
 	address 10.0.11.29
 	netmask 255.255.255.0
 	up route add -net 1.1.21.1 netmask 255.255.255.255 gw 10.0.11.31
@@ -6133,8 +6132,8 @@ iface eth-11-1 inet static
 	up route add -net 1.1.24.235 netmask 255.255.255.255 gw 10.0.11.31
 
 
-allow-vnet eth-13-1
-iface eth-13-1 inet static
+allow-vnet xeth13
+iface xeth13 inet static
 	address 10.0.13.29
 	netmask 255.255.255.0
 	up route add -net 1.1.25.1 netmask 255.255.255.255 gw 10.0.13.31
@@ -7140,8 +7139,8 @@ iface eth-13-1 inet static
 
   
 
-allow-vnet eth-15-1
-iface eth-15-1 inet static
+allow-vnet xeth15
+iface xeth15 inet static
 	address 10.0.15.29
 	netmask 255.255.255.0
 	up route add -net 1.1.29.1 netmask 255.255.255.255 gw 10.0.15.31
@@ -8146,8 +8145,8 @@ iface eth-15-1 inet static
 	up route add -net 1.1.32.235 netmask 255.255.255.255 gw 10.0.15.31
 
 
-allow-vnet eth-17-1
-iface eth-17-1 inet static
+allow-vnet xeth17
+iface xeth17 inet static
 	address 10.0.17.29
 	netmask 255.255.255.0
 	up route add -net 1.1.33.1 netmask 255.255.255.255 gw 10.0.17.32
@@ -9152,8 +9151,8 @@ iface eth-17-1 inet static
 	up route add -net 1.1.36.235 netmask 255.255.255.255 gw 10.0.17.32
 
 
-allow-vnet eth-19-1
-iface eth-19-1 inet static
+allow-vnet xeth19
+iface xeth19 inet static
 	address 10.0.19.29
 	netmask 255.255.255.0
 	up route add -net 1.1.37.1 netmask 255.255.255.255 gw 10.0.19.32
@@ -10158,8 +10157,8 @@ iface eth-19-1 inet static
 	up route add -net 1.1.40.235 netmask 255.255.255.255 gw 10.0.19.32
 
 
-allow-vnet eth-21-1
-iface eth-21-1 inet static
+allow-vnet xeth21
+iface xeth21 inet static
 	address 10.0.21.29
 	netmask 255.255.255.0
 	up route add -net 1.1.41.1 netmask 255.255.255.255 gw 10.0.21.32
@@ -11165,8 +11164,8 @@ iface eth-21-1 inet static
 
   
 
-allow-vnet eth-23-1
-iface eth-23-1 inet static
+allow-vnet xeth23
+iface xeth23 inet static
 	address 10.0.23.29
 	netmask 255.255.255.0
 	up route add -net 1.1.45.1 netmask 255.255.255.255 gw 10.0.23.32
@@ -12171,8 +12170,8 @@ iface eth-23-1 inet static
 	up route add -net 1.1.48.235 netmask 255.255.255.255 gw 10.0.23.32
 
 
-allow-vnet eth-25-1
-iface eth-25-1 inet static
+allow-vnet xeth25
+iface xeth25 inet static
 	address 10.0.25.29
 	netmask 255.255.255.0
 	up route add -net 1.1.49.1 netmask 255.255.255.255 gw 10.0.25.32
@@ -13177,8 +13176,8 @@ iface eth-25-1 inet static
 	up route add -net 1.1.52.235 netmask 255.255.255.255 gw 10.0.25.32
 
 
-allow-vnet eth-27-1
-iface eth-27-1 inet static
+allow-vnet xeth27
+iface xeth27 inet static
 	address 10.0.27.29
 	netmask 255.255.255.0
 	up route add -net 1.1.53.1 netmask 255.255.255.255 gw 10.0.27.32
@@ -14184,8 +14183,8 @@ iface eth-27-1 inet static
 
 	
 
-allow-vnet eth-29-1
-iface eth-29-1 inet static
+allow-vnet xeth29
+iface xeth29 inet static
 	address 10.0.29.29
 	netmask 255.255.255.0
 	up route add -net 1.1.57.1 netmask 255.255.255.255 gw 10.0.29.32
@@ -15191,8 +15190,8 @@ iface eth-29-1 inet static
 
   
 
-allow-vnet eth-31-1
-iface eth-31-1 inet static
+allow-vnet xeth31
+iface xeth31 inet static
 	address 10.0.31.29
 	netmask 255.255.255.0
 	up route add -net 1.1.61.1 netmask 255.255.255.255 gw 10.0.31.32

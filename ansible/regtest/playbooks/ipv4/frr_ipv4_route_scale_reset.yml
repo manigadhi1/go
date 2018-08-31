@@ -21,5 +21,7 @@
       - /var/log/linux_routes.txt
       - /var/log/frr_routes.txt
 
-    - name: Restart goes
-      command: "goes restart"
+    - name: Restart networking service
+      service:
+        name: networking
+        state: restarted

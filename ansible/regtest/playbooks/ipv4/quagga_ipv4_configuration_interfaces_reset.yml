@@ -14,5 +14,7 @@
         path: "{{ network_interfaces_file_bck }}"
         state: absent
 
-    - name: Restart goes
-      command: "goes restart"
+    - name: Restart networking service
+      service:
+        name: networking
+        state: restarted

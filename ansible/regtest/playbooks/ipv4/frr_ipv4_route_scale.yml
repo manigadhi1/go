@@ -37,8 +37,13 @@
         src: "../../files/{{inventory_hostname}}/static_16k_routes"
         dest: "{{ network_interfaces_file }}"
 
+    - name: Restart networking service
+      service:
+        name: networking
+        state: restarted
+
     - name: Restart goes
-      command: "goes restart"
+      command: goes restart
 
     - file:
         path: "{{ ipv4_log_dir }}"
