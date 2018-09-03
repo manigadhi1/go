@@ -53,6 +53,7 @@ xeth_config_file_bck: /etc/lldpd.d/xeth_conf.bck
 
 goes_start_file: /etc/goes/start
 goes_start_file_bck: /etc/goes/start.bck
+goesd_modules_file: /etc/modules-load.d/goesd-platina-mk1-modules.conf
 
 goes_url_path: 'http://downloads.platinasystems.com/LATEST/'
 goes_installer_dir: '/tmp/'

@@ -37,37 +37,21 @@ options:
         - Name of the switch on which tests will be performed.
       required: False
       type: str
-    leaf_server:
+    eth_ips_last_octet:
       description:
-        - Name of the leaf switch on which iperf server is running.
-      required: False
-      type: str
-    leaf_eth1_ip:
-      description:
-        - IP address of eth-1-1 interface of leaf switch.
+        - Last octets of IP address of interfaces of leaf switch.
       required: False
       type: str
       default: ''
-    spine_eth1_ip:
-      description:
-        - IP address of eth-1-1 interface of spine switch.
-      required: False
-      type: str
-      default: ''
-    eth_list:
-      description:
-        - List of eth interfaces described as string.
-      required: False
-      type: str
     is_subports:
       description:
         - Flag to indicate if subports are provisioned or not.
       required: False
       type: bool
       default: False
-    two_lanes:
+    is_lane2_count2:
       description:
-        - Flag to indicate if two lanes are used during port provisioning.
+        - Flag to indicate if lane 2 count 2 configuration is used or not.
       required: False
       type: bool
       default: False
@@ -148,26 +132,37 @@ def verify_traffic(module):
     :param module: The Ansible module to fetch input parameters.
     """
     global RESULT_STATUS, HASH_DICT
-    port = 5000
     failure_summary = ''
     switch_name = module.params['switch_name']
-    leaf_server = module.params['leaf_server']
-    leaf_eth1_ip = module.params['leaf_eth1_ip']
-    spine_eth1_ip = module.params['spine_eth1_ip']
+    eth_ips_last_octet = module.params['eth_ips_last_octet'].split(',')
     is_subports = module.params['is_subports']
-    two_lanes = module.params['two_lanes']
-    eth_list = module.params['eth_list'].split(',')
+    is_lane2_count2 = module.params['is_lane2_count2']
+    eth_list = ['1']
 
-    if not is_subports:
-        if switch_name == leaf_server:
-            third_octet = spine_eth1_ip.split('.')[3]
+    if is_subports:
+        if not is_lane2_count2:
+            subport = ['1', '2', '3', '4']
         else:
-            third_octet = leaf_eth1_ip.split('.')[3]
+            subport = ['1', '2']
+    else:
+        subport = '1'
 
-        for eth in eth_list:
-            port += 1
-            cmd = 'iperf -c 10.0.{}.{} -t 2 -p {} -P 1'.format(eth, third_octet,
-                                                               port)
+    for eth in eth_list:
+        ind = eth_list.index(eth)
+        last_octet = eth_ips_last_octet[ind]
+        if is_subports:
+            for port in subport:
+                cmd = 'iperf -c 10.{}.{}.{} -t 2 -P 1'.format(eth, port, last_octet)
+                traffic_out = execute_commands(module, cmd)
+
+                if ('Transfer' not in traffic_out and 'Bandwidth' not in traffic_out and
+                        'Bytes' not in traffic_out and 'bits/sec' not in traffic_out):
+                    RESULT_STATUS = False
+                    failure_summary += 'On switch {} '.format(switch_name)
+                    failure_summary += 'iperf traffic cannot be verified for '
+                    failure_summary += 'xeth{}-{} using command {}\n'.format(eth, port, cmd)
+        else:
+            cmd = 'iperf -c 10.0.{}.{} -t 2 -P 1'.format(eth, last_octet)
             traffic_out = execute_commands(module, cmd)
 
             if ('Transfer' not in traffic_out and 'Bandwidth' not in traffic_out and
@@ -175,31 +170,18 @@ def verify_traffic(module):
                 RESULT_STATUS = False
                 failure_summary += 'On switch {} '.format(switch_name)
                 failure_summary += 'iperf traffic cannot be verified for '
-                failure_summary += 'eth-{}-1 using command {}\n'.format(eth, cmd)
-    else:
-        third_octet = 0
-        if switch_name == leaf_server:
-            last_octet = '2'
-        else:
-            last_octet = '1'
+                failure_summary += 'xeth{} using command {}\n'.format(eth, cmd)
 
-        subports = [1, 3] if two_lanes else range(1, 5)
-        for eth in eth_list:
-            for subport in subports:
-                port += 1
-                third_octet += 1
-                cmd = 'iperf -c 192.168.{}.{} -t 2 -p {} -P 1'.format(
-                    third_octet, last_octet, port
-                )
-                out = execute_commands(module, cmd)
-
-                if ('Transfer' not in out and 'Bandwidth' not in out and
-                        'Bytes' not in out and 'bits/sec' not in out):
-                    RESULT_STATUS = False
-                    failure_summary += 'On switch {} '.format(switch_name)
-                    failure_summary += 'iperf traffic cannot be verified for '
-                    failure_summary += 'eth-{}-{} using command {}\n'.format(
-                        eth, subport, cmd)
+    # for eth in eth_list:
+    #     for port in subport:
+    #         cmd = 'goes hget platina-mk1 eth-{}-{}'.format(eth, port)
+    #         out = run_cli(module, cmd).splitlines()
+    #         for line in out:
+    #             if 'vnet.eth-{}-{}.port-rx-crc-error-packet'.format(eth, port) in line and '0' not in line:
+    #                 RESULT_STATUS = False
+    #                 failure_summary += 'On switch {} '.format(switch_name)
+    #                 failure_summary += 'crc error count is not 0 for interface '
+    #                 failure_summary += 'eth-{}-{} \n'.format(eth, port)
 
     HASH_DICT['result.detail'] = failure_summary
 
@@ -212,14 +194,11 @@ def main():
     module = AnsibleModule(
         argument_spec=dict(
             switch_name=dict(required=False, type='str'),
-            leaf_server=dict(required=False, type='str'),
-            leaf_eth1_ip=dict(required=False, type='str', default=''),
-            spine_eth1_ip=dict(required=False, type='str', default=''),
-            eth_list=dict(required=False, type='str'),
+            eth_ips_last_octet=dict(required=False, type='str', default=''),
             is_subports=dict(required=False, type='bool', default=False),
-            two_lanes=dict(required=False, type='bool', default=False),
+            is_lane2_count2=dict(required=False, type='bool', default=False),
             hash_name=dict(required=False, type='str'),
-            log_dir_path=dict(required=False, type='str'),
+            log_dir_path=dict(required=False, type='str')
         )
     )
 
@@ -249,6 +228,7 @@ def main():
         hash_dict=HASH_DICT,
         log_file_path=log_file_path
     )
+
 
 if __name__ == '__main__':
     main()

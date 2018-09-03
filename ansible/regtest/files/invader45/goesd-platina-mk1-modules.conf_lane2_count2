@@ -1,0 +1,12 @@
+# goes-mk1-modules.conf: kernel modules to load at boot time.
+#
+# This file contains the names of kernel modules that should be loaded
+# at boot time, one per line. Lines beginning with "#" are ignored.
+#
+# load the i2c_i801 and uio_pci_dma drivers
+i2c_i801
+#uio_pci_dma
+platina-mk1
+ixgbe
+ixgbevf
+options platina-mk1 provision=2,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1

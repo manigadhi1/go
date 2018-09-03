@@ -1,6 +1,6 @@
 ---
 
-- hosts: leaf:spine
+- hosts: leaf[0]:spine[0]
   become: true
   ignore_errors: yes
   tasks:
@@ -15,17 +15,19 @@
         src: "../../files/{{inventory_hostname}}/network_interfaces_master"
         dest: "{{ network_interfaces_file }}"
 
+    - name: Copy default goesd-platina-mk1-modules.conf
+      template:
+        src: "../../files/{{ inventory_hostname }}/goesd-platina-mk1-modules.conf_default"
+        dest: "{{ goesd_modules_file }}"
+
     - name: Execute commands
       command: "{{ item }}"
       with_items:
-      - 'goes stop'
       - 'rmmod platina-mk1'
-      - 'modprobe platina-mk1'
-      - 'ifdown -a --allow vnet'
-      - 'ifup -a'
-      - 'goes start'
+      - 'modprobe platina-mk1 provision=1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1'
+      - 'service networking restart'
+      - 'goes restart'
 
     - name: Wait few seconds for GOES to come up
       pause:
         seconds: 5
-

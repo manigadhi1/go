@@ -23,40 +23,47 @@
         start_time: "{{ start_time.stdout }}"
 
 
-- hosts: leaf:spine
+- hosts: leaf[0]:spine[0]
   become: true
   tasks:
     - file:
         path: "{{ port_provision_log_dir }}"
         state: directory
 
-    - name: Copy provisioned network interfaces file
+    - name: Copy port provisioned interfaces_10g_cr_fec_cl74_autoneg_off_lanes_1_count_4 file to /etc/network/interfaces
       template:
-        src: "../../files/{{inventory_hostname}}/network_interfaces_10g"
+        src: "../../files/{{ inventory_hostname }}/interfaces_10g_cr_fec_cl74_autoneg_off_lanes_1_count_4"
         dest: "{{ network_interfaces_file }}"
 
-    - name: Execute commands
+    - name: Copy goesd-platina-mk1-modules.conf file
+      template:
+        src: "../../files/{{ inventory_hostname }}/goesd-platina-mk1-modules.conf_lane1_count4"
+        dest: "{{ goesd_modules_file }}"
+
+    - name: Restart networking service
+      service:
+        name: networking
+        state: restarted
+
+    - name: Restart goes
       command: "{{ item }}"
       with_items:
       - 'goes stop'
       - 'rmmod platina-mk1'
-      - 'modprobe platina-mk1'
-      - 'ifdown -a --allow vnet'
-      - 'ifup -a'
+      - 'modprobe platina-mk1 provision=4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1'
+      - 'service networking restart'
       - 'goes start'
 
     - name: Wait few seconds for GOES to come up
       pause:
         seconds: 15
 
-    - name: Update the setup configs and verify
-      set_configs:
+    - name: Verify media, speed and fec values
+      test_port_links:
         switch_name: "{{ inventory_hostname }}"
-        config_file: "{{ lookup('file', '../../group_vars/{{ inventory_hostname }}/interfaces_port_provision') }}"
         speed: "10g"
         media: "copper"
         fec: "cl74"
-        autoneg: "off"
         is_subports: True
         platina_redis_channel: "{{ platina_redis_channel }}"
         hash_name: "{{ hostvars['server_emulator']['hash_name'] }}"
@@ -81,7 +88,7 @@
       delegate_to: 127.0.0.1
 
 
-- hosts: spine
+- hosts: spine[0]
   become: true
   tasks:
     - name: Initiate iperf servers
@@ -92,10 +99,9 @@
   become: true
   tasks:
     - name: Initiate iperf client and verify traffic
-      verify_iperf_traffic_master:
+      verify_iperf_traffic:
         switch_name: "{{ inventory_hostname }}"
         eth_ips_last_octet: "31,32"
-        eth_list: "1,21"
         is_subports: True
         hash_name: "{{ hostvars['server_emulator']['hash_name'] }}"
         log_dir_path: "{{ port_provision_log_dir }}"
@@ -117,39 +123,6 @@
         hash_dict: "{{ module_out.hash_dict }}"
         log_content: "{{ logs['content'] | b64decode }}"
       delegate_to: 127.0.0.1
-
-
-- hosts: leaf[1]
-  become: true
-  tasks:
-    - name: Initiate iperf client and verify traffic
-      verify_iperf_traffic_master:
-        switch_name: "{{ inventory_hostname }}"
-        eth_ips_last_octet: "32,31"
-        eth_list: "3,19"
-        is_subports: True
-        hash_name: "{{ hostvars['server_emulator']['hash_name'] }}"
-        log_dir_path: "{{ port_provision_log_dir }}"
-      register: module_out
-
-    - command: "date +%Y%m%d%T"
-      register: end_time
-
-    - name: Fetch the log file
-      slurp:
-        src: "{{ module_out.log_file_path }}"
-      register: logs
-
-    - name: Store the test result in a hash in redis db on server emulator
-      store_result_in_redis:
-        hash_name: "{{ hostvars['server_emulator']['hash_name'] }}"
-        start_time: "{{ hostvars['server_emulator']['start_time'] }}"
-        end_time: "{{ end_time.stdout }}"
-        hash_dict: "{{ module_out.hash_dict }}"
-        log_content: "{{ logs['content'] | b64decode }}"
-      delegate_to: 127.0.0.1
-
-    - include: ../../playbooks/get_goes_version_and_tags.yml
 
 
 - include: port_provision_reset.yml
