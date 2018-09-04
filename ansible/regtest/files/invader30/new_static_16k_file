@@ -9219,7 +9219,6 @@ post-up route add -net 3.3.36.232 netmask 255.255.255.0 gw 10.0.17.31
 post-up route add -net 3.3.36.233 netmask 255.255.255.0 gw 10.0.17.31
 post-up route add -net 3.3.36.234 netmask 255.255.255.0 gw 10.0.17.31
 post-up route add -net 3.3.36.235 netmask 255.255.255.0 gw 10.0.17.31
-
 post-down ip link set $IFACE down
 allow-vnet xeth17
 

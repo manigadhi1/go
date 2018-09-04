@@ -3075,7 +3075,6 @@ post-up route add -net 2.2.12.232 netmask 255.255.255.0 gw 10.0.5.29
 post-up route add -net 2.2.12.233 netmask 255.255.255.0 gw 10.0.5.29
 post-up route add -net 2.2.12.234 netmask 255.255.255.0 gw 10.0.5.29
 post-up route add -net 2.2.12.235 netmask 255.255.255.0 gw 10.0.5.29
-
 post-down ip link set $IFACE down
 allow-vnet xeth5
 
@@ -6539,7 +6538,7 @@ post-up route add -net 2.2.26.109 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.110 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.111 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.112 netmask 255.255.255.0 gw 10.0.13.29
-OBOBOBpost-up route add -net 2.2.26.113 netmask 255.255.255.0 gw 10.0.13.29
+post-up route add -net 2.2.26.113 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.114 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.115 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.116 netmask 255.255.255.0 gw 10.0.13.29
@@ -6563,7 +6562,7 @@ post-up route add -net 2.2.26.133 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.134 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.135 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.136 netmask 255.255.255.0 gw 10.0.13.29
-OBOBOBpost-up route add -net 2.2.26.137 netmask 255.255.255.0 gw 10.0.13.29
+post-up route add -net 2.2.26.137 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.138 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.139 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.140 netmask 255.255.255.0 gw 10.0.13.29
@@ -6585,13 +6584,13 @@ post-up route add -net 2.2.26.155 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.156 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.157 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.158 netmask 255.255.255.0 gw 10.0.13.29
-OBOBOBpost-up route add -net 2.2.26.159 netmask 255.255.255.0 gw 10.0.13.29
+post-up route add -net 2.2.26.159 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.160 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.161 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.162 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.163 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.164 netmask 255.255.255.0 gw 10.0.13.29
-OBOBOBpost-up route add -net 2.2.26.165 netmask 255.255.255.0 gw 10.0.13.29
+post-up route add -net 2.2.26.165 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.166 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.167 netmask 255.255.255.0 gw 10.0.13.29
 post-up route add -net 2.2.26.168 netmask 255.255.255.0 gw 10.0.13.29
@@ -11269,6 +11268,7 @@ post-up route add -net 2.2.44.233 netmask 255.255.255.0 gw 10.0.21.30
 post-up route add -net 2.2.44.234 netmask 255.255.255.0 gw 10.0.21.30
 post-up route add -net 2.2.44.235 netmask 255.255.255.0 gw 10.0.21.30
 post-down ip link set $IFACE down
+allow-vnet xeth21
 
 auth xeth22
 iface xeth22 inet static
