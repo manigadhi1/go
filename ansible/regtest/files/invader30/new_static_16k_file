@@ -3099,7 +3099,6 @@ pre-up ethtool -s $IFACE speed 100000 autoneg off
 pre-up ethtool --set-priv-flags $IFACE copper on
 pre-up ethtool --set-priv-flags $IFACE fec74 off
 pre-up ethtool --set-priv-flags $IFACE fec91 on
-post-down ip link set $IFACE down
 post-up route add -net 3.3.13.1 netmask 255.255.255.0 gw 10.0.7.32
 post-up route add -net 3.3.13.2 netmask 255.255.255.0 gw 10.0.7.32
 post-up route add -net 3.3.13.3 netmask 255.255.255.0 gw 10.0.7.32
@@ -4100,6 +4099,7 @@ post-up route add -net 3.3.16.232 netmask 255.255.255.0 gw 10.0.7.32
 post-up route add -net 3.3.16.233 netmask 255.255.255.0 gw 10.0.7.32
 post-up route add -net 3.3.16.234 netmask 255.255.255.0 gw 10.0.7.32
 post-up route add -net 3.3.16.235 netmask 255.255.255.0 gw 10.0.7.32
+post-down ip link set $IFACE down
 allow-vnet xeth7
 
 auto xeth8
