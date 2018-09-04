@@ -52,9 +52,9 @@
         name: frr
         state: restarted
 
-    - name: Wait for 35 secs for bgp to establish communication
+    - name: Wait for 40 secs for bgp to establish communication
       pause:
-        seconds: 35
+        seconds: 40
 
     - file:
         path: "{{ bgp_log_dir }}"

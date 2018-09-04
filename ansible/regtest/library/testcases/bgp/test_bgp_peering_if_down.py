@@ -267,8 +267,8 @@ def verify_bgp_peering_interface_down(module):
     check_bgp_neighbors(module)
 
     # Verify ping
-    if check_ping and is_leaf:
-        verify_ping(module, self_ip, neighbor_ip)
+    # if check_ping and is_leaf:
+    #    verify_ping(module, self_ip, neighbor_ip)
 
     # Bring up eth interfaces which were down
     if is_leaf:
